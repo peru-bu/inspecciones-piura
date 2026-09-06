@@ -678,7 +678,7 @@
           <select id="centroSelect"></select>
         </div>
         <button id="continueCenter" class="primary" type="button">Ver equipos</button>
-        <button id="reloadMasters" class="secondary" type="button" style="margin-top: 8px;">Recargar maestros</button>
+        <button id="reloadMasters" class="secondary" type="button" style="margin-top: 8px;">Actualizar cache</button>
       </div>
     </section>
 
@@ -883,13 +883,13 @@
     async function reloadMasters() {
       try {
         $('#reloadMasters').disabled = true;
-        setStatus('Recargando maestros...');
+        setStatus('Actualizando cache...');
         await runApi('cargarMaestros');
         const data = await runApi('getInitialData');
         state.centers = data.centers || [];
         state.auditors = data.auditors || [];
         renderInitialData();
-        setStatus('Maestros actualizados.', 'ok');
+        setStatus('Cache actualizado.', 'ok');
       } catch (error) {
         setStatus(error.message || String(error), 'error');
       } finally {
