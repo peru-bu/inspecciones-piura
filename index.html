@@ -1,35 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <base target="_top">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#20211e">
+  <title>Inspecciones · Piura y Sullana</title>
   <style>
     :root {
-      color-scheme: dark;
-      --orange: #fca311;
-      --orange-soft: #ffc966;
-      --prussian: #14213d;
-      --prussian-deep: #0d1730;
-      --black: #000000;
-      --alabaster: #e5e5e5;
+      color-scheme: light;
+      --orange: #ffb800;
+      --orange-soft: #fff2c5;
+      --accent: #e77824;
+      --prussian: #20211e;
+      --prussian-deep: #30312b;
+      --black: #20211e;
+      --alabaster: #f5f3ec;
       --white: #ffffff;
-      --done: #22c55e;
-      --done-soft: rgba(34, 197, 94, .16);
-      --done-line: rgba(34, 197, 94, .38);
-      --pending: #ef4444;
-      --pending-soft: rgba(239, 68, 68, .16);
-      --pending-line: rgba(239, 68, 68, .38);
-      --bg: var(--prussian);
-      --surface: var(--prussian-deep);
-      --surface-strong: var(--black);
-      --surface-soft: rgba(255, 255, 255, .05);
-      --line: rgba(255, 255, 255, .08);
-      --text: var(--white);
-      --muted: rgba(229, 229, 229, .68);
-      --radius-lg: 22px;
+      --done: #197047;
+      --done-soft: #eaf5ed;
+      --done-line: #b8d9c2;
+      --pending: #b44331;
+      --pending-soft: #fff0e9;
+      --pending-line: #edc8b9;
+      --bg: var(--alabaster);
+      --surface: #ffffff;
+      --surface-strong: #f8f7f2;
+      --surface-soft: #f3f2ec;
+      --line: #e5e3d9;
+      --text: #262820;
+      --muted: #686b60;
+      --radius-lg: 24px;
       --radius-md: 16px;
       --radius-sm: 12px;
-      --shadow: 0 16px 34px rgba(0, 0, 0, .28);
+      --shadow: 0 8px 28px rgba(40, 37, 24, .045);
     }
 
     * {
@@ -39,9 +43,9 @@
     body {
       margin: 0;
       min-width: 320px;
-      background: var(--bg);
+      background: radial-gradient(ellipse at 90% 20%, #fff4d9 0, transparent 48%), var(--bg);
       color: var(--text);
-      font-family: 'Inter', Roboto, Arial, sans-serif;
+      font-family: 'Segoe UI', Inter, Roboto, Arial, sans-serif;
       letter-spacing: 0;
     }
 
@@ -56,6 +60,13 @@
       border: 0;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
+      transition: background .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+      touch-action: manipulation;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 4px;
     }
 
     .app-header {
@@ -63,10 +74,18 @@
       top: 0;
       z-index: 20;
       display: grid;
-      gap: 14px;
-      padding: 18px 16px 16px;
+      gap: 12px;
+      padding: 20px 20px 16px;
       background: var(--prussian);
-      border-bottom: 1px solid var(--line);
+      color: var(--white);
+      border-top: 4px solid var(--orange);
+      border-bottom: 1px solid #383a32;
+      box-shadow: 0 8px 24px #20211e0d;
+    }
+
+    .app-header > * {
+      width: min(736px, 100%);
+      margin-inline: auto;
     }
 
     .topbar {
@@ -78,23 +97,38 @@
 
     .brand-row {
       display: grid;
-      grid-template-columns: 32px minmax(0, 1fr);
-      gap: 10px;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 12px;
       align-items: center;
       min-width: 0;
     }
 
     .brand-mark {
-      width: 32px;
-      height: 32px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 50%;
-      background: var(--black);
-      color: var(--orange);
+      border-radius: 14px;
+      background: linear-gradient(140deg, #ffd14d, var(--orange));
+      color: var(--black);
       font-size: 15px;
       font-weight: 900;
+      box-shadow: 0 4px 14px #ffb80020;
+    }
+
+    .brand-mark svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    .brand-caption {
+      margin-bottom: 4px;
+      color: #f7cb65;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
     }
 
     .back-button {
@@ -102,7 +136,7 @@
       height: 40px;
       border-radius: 50%;
       border: 0;
-      background: rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .07);
       color: var(--white);
       font-size: 20px;
       font-weight: 900;
@@ -115,14 +149,14 @@
 
     h1 {
       margin: 0;
-      font-size: 17px;
+      font-size: 20px;
       font-weight: 700;
       line-height: 1.2;
     }
 
     .subtitle {
       margin-top: 2px;
-      color: var(--muted);
+      color: #c3c5ba;
       font-size: 13px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -130,23 +164,24 @@
     }
 
     .status {
-      min-height: 34px;
+      min-height: 30px;
       display: flex;
       align-items: center;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .07);
-      color: var(--muted);
-      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .04);
+      color: #d6d8ce;
+      font-size: 12px;
       font-weight: 600;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
+      white-space: normal;
+      overflow-wrap: anywhere;
     }
 
     .status.ok {
-      color: #bbf7d0;
-      background: rgba(34, 197, 94, .16);
+      color: #c3e5bd;
+      background: #b6d9a80d;
     }
 
     .status.error {
@@ -157,17 +192,17 @@
     .step-bar {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 6px;
+      gap: 8px;
     }
 
     .step {
-      min-height: 30px;
+      min-height: 34px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 999px;
+      border-radius: 10px;
       background: rgba(255, 255, 255, .07);
-      color: var(--muted);
+      color: #c3c5ba;
       font-size: 11px;
       font-weight: 700;
       text-align: center;
@@ -179,17 +214,18 @@
     .step.active {
       color: var(--black);
       background: var(--orange);
+      box-shadow: 0 3px 10px #ffb80015;
     }
 
     .step.done {
-      color: var(--white);
-      background: rgba(255, 255, 255, .16);
+      color: #f7d984;
+      background: #ffb80012;
     }
 
     .app-main {
       width: min(780px, 100%);
       margin: 0 auto;
-      padding: 16px;
+      padding: 28px 20px;
       padding-bottom: 92px;
     }
 
@@ -202,17 +238,17 @@
     }
 
     .screen-title {
-      margin: 6px 0 6px;
-      font-size: 24px;
+      margin: 6px 0 10px;
+      font-size: clamp(25px, 5vw, 32px);
       font-weight: 800;
       line-height: 1.2;
     }
 
     .screen-copy {
-      margin: 0 0 16px;
+      margin: 0 0 24px;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.45;
+      line-height: 1.6;
     }
 
     .panel,
@@ -224,7 +260,7 @@
     }
 
     .panel {
-      padding: 16px;
+      padding: 22px;
     }
 
     .field {
@@ -249,14 +285,14 @@
       padding: 10px 14px;
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
-      background: rgba(255, 255, 255, .06);
+      background: var(--surface-strong);
       color: var(--text);
       font-size: 16px;
       outline: none;
     }
 
     select option {
-      background: var(--prussian-deep);
+      background: var(--surface);
       color: var(--text);
     }
 
@@ -269,7 +305,7 @@
     input:focus,
     textarea:focus {
       border-color: var(--orange);
-      box-shadow: 0 0 0 3px rgba(252, 163, 17, .18);
+      box-shadow: 0 0 0 3px #ffb80026;
     }
 
     .primary,
@@ -286,29 +322,32 @@
     }
 
     .primary {
-      background: var(--orange);
+      background: linear-gradient(110deg, #ffce45, var(--orange));
       color: var(--black);
+      box-shadow: 0 4px 12px #ecac0024;
     }
 
     .secondary {
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, .07);
-      color: var(--white);
+      background: var(--surface);
+      color: var(--text);
     }
 
     .success {
-      background: var(--black);
-      color: var(--white);
+      background: var(--done-soft);
+      color: var(--done);
+      border: 1px solid var(--done-line);
     }
 
     .warning {
-      background: var(--orange);
+      background: var(--orange-soft);
       color: var(--black);
+      border: 1px solid #efcf77;
     }
 
     .danger-lite {
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, .05);
+      background: var(--surface-soft);
       color: var(--muted);
     }
 
@@ -332,7 +371,7 @@
       width: 100%;
       display: grid;
       gap: 10px;
-      padding: 16px;
+      padding: 20px;
       color: inherit;
       text-align: left;
       overflow: hidden;
@@ -342,8 +381,8 @@
       content: "";
       position: absolute;
       inset: 0 auto 0 0;
-      width: 4px;
-      background: var(--orange);
+      width: 3px;
+      background: linear-gradient(var(--orange), var(--accent));
     }
 
     .card.pending-card::before {
@@ -393,7 +432,7 @@
       gap: 3px;
       padding: 8px;
       border-radius: var(--radius-sm);
-      background: rgba(255, 255, 255, .06);
+      background: var(--surface-strong);
       text-align: center;
     }
 
@@ -423,18 +462,18 @@
     }
 
     .badge.pending {
-      color: #fecaca;
+      color: var(--pending);
       background: var(--pending-soft);
     }
 
     .badge.done {
-      color: #bbf7d0;
+      color: var(--done);
       background: var(--done-soft);
     }
 
     .badge.blocked {
       color: var(--muted);
-      background: rgba(255, 255, 255, .05);
+      background: var(--surface-soft);
     }
 
     .item-actions {
@@ -479,7 +518,7 @@
       min-height: 26px;
       padding: 4px 10px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, .08);
+      background: var(--surface-soft);
       color: var(--muted);
       font-size: 12px;
       font-weight: 700;
@@ -495,12 +534,12 @@
 
     .stat.pending strong,
     .stat.pending span {
-      color: #fecaca;
+      color: var(--pending);
     }
 
     .stat.done strong,
     .stat.done span {
-      color: #bbf7d0;
+      color: var(--done);
     }
 
     .choice-button {
@@ -514,12 +553,12 @@
     }
 
     .choice-button.success {
-      background: var(--black);
-      color: var(--white);
+      background: var(--done-soft);
+      color: var(--done);
     }
 
     .choice-button.warning {
-      background: var(--orange);
+      background: var(--orange-soft);
       color: var(--black);
     }
 
@@ -563,7 +602,7 @@
       position: absolute;
       inset: 0 auto 0 0;
       width: 4px;
-      background: rgba(255, 255, 255, .12);
+      background: var(--line);
     }
 
     .question-row.answer-yes::before {
@@ -589,7 +628,7 @@
       min-height: 48px;
       border-radius: var(--radius-md);
       overflow: hidden;
-      background: rgba(255, 255, 255, .06);
+      background: var(--surface-soft);
     }
 
     .segmented button {
@@ -614,10 +653,11 @@
       z-index: 12;
       display: grid;
       gap: 8px;
-      margin: 16px -16px -16px;
-      padding: 14px 16px;
-      background: var(--prussian);
+      margin: 20px -22px -22px;
+      padding: 16px 22px;
+      background: #fffffff2;
       border-top: 1px solid var(--line);
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
       backdrop-filter: blur(8px);
     }
 
@@ -625,15 +665,81 @@
       padding: 22px;
       border: 1px dashed var(--line);
       border-radius: var(--radius-lg);
-      background: rgba(255, 255, 255, .04);
+      background: var(--surface-strong);
       color: var(--muted);
       text-align: center;
       line-height: 1.5;
     }
 
+    .welcome-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 12px;
+      color: #925014;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .welcome-label::before {
+      content: '';
+      width: 20px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--accent);
+    }
+
+    .agency-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .agency-note svg {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      color: #a5631b;
+    }
+
+    .brand-footer {
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+      letter-spacing: .04em;
+    }
+
+    @media (hover: hover) {
+      .primary:hover:not(:disabled) { background: #ffd14d; box-shadow: 0 6px 16px #ecac0033; }
+      .secondary:hover:not(:disabled) { background: var(--surface-soft); border-color: #c7c8bb; }
+      .card:hover:not(:disabled) { transform: translateY(-2px); border-color: #d6bc77; box-shadow: 0 12px 28px #2825180d; }
+      .choice-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow); }
+      .back-button:hover:not(:disabled) { background: #ffffff26; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+
+    @media (max-width: 380px) {
+      .app-header { padding-inline: 14px; }
+      .app-main { padding-inline: 14px; }
+      .panel { padding: 18px; }
+      .sticky-actions { margin-inline: -18px; margin-bottom: -18px; padding-inline: 18px; }
+      .card-title-row { flex-wrap: wrap; }
+      .brand-caption { font-size: 9px; letter-spacing: .1em; }
+    }
+
     @media (min-width: 720px) {
       .app-main {
-        padding: 22px;
+        padding: 36px 22px 92px;
       }
 
       .list {
@@ -652,14 +758,15 @@
     <div class="topbar">
       <button id="backButton" class="back-button" type="button" aria-label="Volver">&lsaquo;</button>
       <div class="brand-row">
-        <span class="brand-mark" aria-hidden="true">&#10003;</span>
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v5.5c0 4.2 3.2 7.4 7.5 9.5 4.3-2.1 7.5-5.3 7.5-9.5V6L12 3Z"/><path d="m8.5 12 2.3 2.3 4.7-4.8"/></svg></span>
         <div>
+          <div class="brand-caption">Agencias · Piura y Sullana</div>
           <h1 id="headerTitle">Inspecciones</h1>
           <div id="headerSubtitle" class="subtitle">Selecciona una sede</div>
         </div>
       </div>
     </div>
-    <div id="status" class="status">Cargando...</div>
+    <div id="status" class="status" role="status" aria-live="polite">Cargando...</div>
     <div class="step-bar" aria-label="Avance">
       <div id="stepSede" class="step">Sede</div>
       <div id="stepEquipo" class="step">Equipo</div>
@@ -670,15 +777,17 @@
 
   <main class="app-main">
     <section id="viewSede" class="view">
-      <h2 class="screen-title">Selecciona tu sede</h2>
-      <p class="screen-copy">Primero elige la agencia o sede donde haras la inspeccion.</p>
+      <div class="welcome-label">Seguridad en cada detalle</div>
+      <h2 class="screen-title">Una inspección.<br>Un entorno más seguro.</h2>
+      <p class="screen-copy">Inspecciones de las agencias de Piura y Sullana.<br>Elige tu sede para comenzar el recorrido.</p>
       <div class="panel">
         <div class="field">
-          <label for="centroSelect">Sede</label>
+          <label for="centroSelect">¿Dónde vas a inspeccionar?</label>
           <select id="centroSelect"></select>
         </div>
-        <button id="continueCenter" class="primary" type="button">Ver equipos</button>
-        <button id="reloadMasters" class="secondary" type="button" style="margin-top: 8px;">Actualizar cache</button>
+        <button id="continueCenter" class="primary" type="button">Comenzar inspección &rarr;</button>
+        <button id="reloadMasters" class="secondary" type="button" style="margin-top: 10px;">Actualizar equipos y auditores</button>
+        <div class="agency-note"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m8 13 3 3 5-6"/></svg><span>Revisa, registra y contribuye a una operación segura.</span></div>
       </div>
     </section>
 
@@ -740,6 +849,7 @@
         </div>
       </div>
     </section>
+    <footer class="brand-footer">Piura &amp; Sullana · Comprometidos con la seguridad</footer>
   </main>
 
   <script>
